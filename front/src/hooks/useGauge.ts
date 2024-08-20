@@ -3,23 +3,28 @@ import { useState, useEffect } from 'react';
 export const useGauge = (initialValue: number) => {
   const [gauge, setGauge] = useState(initialValue);
   const [isDecreasing, setIsDecreasing] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false); // 성공 상태 추가
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isShaking, setIsShaking] = useState(false); // 애니메이션 상태 추가
 
   const decreaseGauge = () => {
     setIsDecreasing(true);
     setGauge((prev) => {
       const newGauge = Math.max(prev - 3, 0);
       if (newGauge === 0) {
-        setIsSuccess(true); // 게이지가 0이 되면 성공 상태로 설정
+        setIsSuccess(true);
       }
       return newGauge;
     });
   };
 
+  const handleClick = () => {
+    setIsShaking(true);
+    decreaseGauge();
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isDecreasing && gauge < 100 && !isSuccess) {
-        // isSuccess가 true이면 증가 멈춤
         setGauge((prev) => Math.min(prev + 1, 100));
       }
     }, 50);
@@ -37,5 +42,15 @@ export const useGauge = (initialValue: number) => {
     }
   }, [isDecreasing]);
 
-  return { gauge, decreaseGauge, isSuccess }; // 성공 상태 반환
+  useEffect(() => {
+    if (isShaking) {
+      const timer = setTimeout(() => {
+        setIsShaking(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isShaking]);
+
+  return { gauge, handleClick, isSuccess, isShaking }; // 필요한 상태와 함수를 반환
 };
