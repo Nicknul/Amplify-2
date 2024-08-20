@@ -1,11 +1,16 @@
-import Image from 'next/image';
-import kongImage from '../public/kong.png';
+'use client';
 
-export default function Home() {
+import React from 'react';
+import GaugeBar from '../components/GaugeBar';
+import { page, title } from '../styles/styles';
+
+const Home: React.FC = () => {
   return (
-    <>
-      <button className="bg-blue-500 px-4 py-2 m-5 text-white rounded-lg hover:bg-blue-600">Hello world</button>
-      {/* <Image src={kongImage} alt="미스터 공" /> */}
-    </>
+    <div className={page}>
+      <h1 className={title}>Gauge Bar Example</h1>
+      <GaugeBar initialValue={100} />
+    </div>
   );
-}
+};
+
+export default Home;
