@@ -16,8 +16,8 @@ const ItemsList: React.FC<ItemsListProps> = ({ onItemClick, inventory }) => {
     { src: chick, name: '병아리' },
     { src: nest, name: '둥지' },
     { src: ribbon, name: '리본' },
-    { src: sunglasses1, name: '외계인 선글라스' },
-    { src: sunglasses2, name: '기본 선글라스' },
+    { src: sunglasses1, name: '외계인 안경' },
+    { src: sunglasses2, name: '선글라스' },
   ];
 
   // 인벤토리에 추가된 아이템은 필터링해서 제외
