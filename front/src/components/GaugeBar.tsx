@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGauge } from '../hooks/useGauge';
 import Modal from './Modal';
+import InventoryModal from './InventoryModal';
 import Image from 'next/image';
-import kongImage from '../public/kong.png'; // 이미지 파일을 import
+import kongImage from '../public/kong.png';
 import bag from '../public/bag.png';
 
 type GaugeBarProps = {
@@ -11,9 +12,18 @@ type GaugeBarProps = {
 
 const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
   const { gauge, handleClick, isSuccess, isShaking } = useGauge(initialValue);
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false); // 인벤토리 상태 관리
 
   const handleCloseModal = () => {
-    window.location.reload(); // 간단히 페이지를 새로고침하여 모달을 닫음
+    window.location.reload();
+  };
+
+  const handleBagClick = () => {
+    setIsInventoryOpen(true); // 인벤토리 모달 열기
+  };
+
+  const handleCloseInventory = () => {
+    setIsInventoryOpen(false); // 인벤토리 모달 닫기
   };
 
   return (
@@ -28,17 +38,19 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
         </div>
         <Image
           src={kongImage}
-          alt="Kong"
-          onClick={handleClick} // 클릭 시 애니메이션 및 게이지 감소 실행
-          className={`cursor-pointer ${isShaking ? 'animate-shake' : ''}`} // 클릭 시에만 애니메이션 적용
+          alt="욱재몬"
+          onClick={handleClick}
+          className={`cursor-pointer ${isShaking ? 'animate-shake' : ''}`}
         />
       </div>
       <Image
         src={bag}
-        alt="bag"
-        className="absolute right-4 w-24 h-24 transform transition-transform duration-300 hover:scale-110" // 오른쪽 상단에 위치
+        alt="인벤토리"
+        onClick={handleBagClick} // 인벤토리 열기
+        className="absolute top-4 right-4 w-24 h-24 transform transition-transform duration-300 hover:scale-110"
       />
-      {isSuccess && <Modal message="The gauge is fully depleted." onClose={handleCloseModal} />}
+      {isSuccess && <Modal message="욱재몬이 쓰러졌다!" onClose={handleCloseModal} />}
+      {isInventoryOpen && <InventoryModal onClose={handleCloseInventory} />} {/* 인벤토리 모달 표시 */}
     </div>
   );
 };
