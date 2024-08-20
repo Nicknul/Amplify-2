@@ -16,14 +16,15 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
   };
 
   return (
-    <div>
-      <div className="w-full h-6 bg-yellow-300 rounded overflow-hidden">
+    <div className="flex flex-col items-center justify-center">
+      <div className="font-bold mb-4">Lv.99 욱재몬</div>
+      <div className="mb-4 w-96 h-10 bg-yellow-300 rounded overflow-hidden">
         <div
           className="h-full bg-red-500 transition-width duration-300 ease-in-out"
           style={{ width: `${gauge}%` }}
         ></div>
       </div>
-      <div className="mt-2 flex justify-center">
+      <div>
         <Image
           src={kongImage}
           alt="Kong"
