@@ -10,7 +10,7 @@ export const useGauge = (initialValue: number) => {
     setGauge((prev) => {
       const newGauge = Math.max(prev - 3, 0);
       if (newGauge === 0) {
-        setIsSuccess(true);
+        setIsSuccess(true); // 게이지가 0이 되면 성공 상태로 설정
       }
       return newGauge;
     });
@@ -18,13 +18,14 @@ export const useGauge = (initialValue: number) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isDecreasing && gauge < 100) {
+      if (!isDecreasing && gauge < 100 && !isSuccess) {
+        // isSuccess가 true이면 증가 멈춤
         setGauge((prev) => Math.min(prev + 1, 100));
       }
     }, 50);
 
     return () => clearInterval(interval);
-  }, [isDecreasing, gauge]);
+  }, [isDecreasing, gauge, isSuccess]);
 
   useEffect(() => {
     if (isDecreasing) {
