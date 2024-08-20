@@ -3,10 +3,17 @@ import { useState, useEffect } from 'react';
 export const useGauge = (initialValue: number) => {
   const [gauge, setGauge] = useState(initialValue);
   const [isDecreasing, setIsDecreasing] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false); // 성공 상태 추가
 
   const decreaseGauge = () => {
     setIsDecreasing(true);
-    setGauge((prev) => Math.max(prev - 3, 0));
+    setGauge((prev) => {
+      const newGauge = Math.max(prev - 3, 0);
+      if (newGauge === 0) {
+        setIsSuccess(true);
+      }
+      return newGauge;
+    });
   };
 
   useEffect(() => {
@@ -29,5 +36,5 @@ export const useGauge = (initialValue: number) => {
     }
   }, [isDecreasing]);
 
-  return { gauge, decreaseGauge };
+  return { gauge, decreaseGauge, isSuccess }; // 성공 상태 반환
 };
