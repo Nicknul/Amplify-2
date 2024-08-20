@@ -6,14 +6,28 @@ import ribbon from '../public/ribbon.png';
 import sunglasses1 from '../public/sunglasses-1.png';
 import sunglasses2 from '../public/sunglasses-2.png';
 
-const ItemsList: React.FC = () => {
+type ItemsListProps = {
+  onItemClicked: (itemName: string) => void;
+};
+
+const ItemsList: React.FC<ItemsListProps> = ({ onItemClicked }) => {
   return (
     <div className="flex space-x-4 mt-4 animate-bounce">
-      <Image src={chick} alt="병아리" className="w-16 h-16" />
-      <Image src={nest} alt="둥지" className="w-16 h-16" />
-      <Image src={ribbon} alt="리본" className="w-16 h-16" />
-      <Image src={sunglasses1} alt="외계인 선글라스" className="w-16 h-16" />
-      <Image src={sunglasses2} alt="선글라스" className="w-16 h-16" />
+      <Image src={chick} alt="아이템" className="w-16 h-16 cursor-pointer" onClick={() => onItemClicked('chick')} />
+      <Image src={nest} alt="아이템" className="w-16 h-16 cursor-pointer" onClick={() => onItemClicked('nest')} />
+      <Image src={ribbon} alt="아이템" className="w-16 h-16 cursor-pointer" onClick={() => onItemClicked('ribbon')} />
+      <Image
+        src={sunglasses1}
+        alt="아이템"
+        className="w-16 h-16 cursor-pointer"
+        onClick={() => onItemClicked('sunglasses-1')}
+      />
+      <Image
+        src={sunglasses2}
+        alt="아이템"
+        className="w-16 h-16 cursor-pointer"
+        onClick={() => onItemClicked('sunglasses-2')}
+      />
     </div>
   );
 };
