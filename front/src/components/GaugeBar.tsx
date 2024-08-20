@@ -9,7 +9,7 @@ type GaugeBarProps = {
 };
 
 const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
-  const { gauge, decreaseGauge, isSuccess } = useGauge(initialValue);
+  const { gauge, handleClick, isSuccess, isShaking } = useGauge(initialValue);
 
   const handleCloseModal = () => {
     window.location.reload(); // 간단히 페이지를 새로고침하여 모달을 닫음
@@ -27,8 +27,8 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
         <Image
           src={kongImage}
           alt="Kong"
-          onClick={decreaseGauge}
-          className="cursor-pointer transform hover:animate-shake" // 크기와 떨림 애니메이션 추가
+          onClick={handleClick} // 클릭 시 애니메이션 및 게이지 감소 실행
+          className={`cursor-pointer ${isShaking ? 'animate-shake' : ''}`} // 클릭 시에만 애니메이션 적용
         />
       </div>
 
