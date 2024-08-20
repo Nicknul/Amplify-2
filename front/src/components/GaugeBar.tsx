@@ -16,7 +16,7 @@ type GaugeBarProps = {
 
 const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
   const { gauge, handleClick, isShaking } = useGauge(initialValue);
-  const { inventory, showItems, setShowItems, addItemToInventory } = useInventory();
+  const { inventory, showItems, setShowItems, addItemToInventory, resetInventory } = useInventory();
   const { isInventoryOpen, openInventory, closeInventory } = useInventoryToggle();
 
   useGaugeBarEffects(gauge, setShowItems);
@@ -31,7 +31,13 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
             <Kong onClick={handleClick} isShaking={isShaking} />
           </>
         )}
-        {showItems && <ItemsList onItemClick={addItemToInventory} inventory={inventory} />}
+        {showItems && (
+          <ItemsList
+            onItemClick={addItemToInventory}
+            inventory={inventory}
+            onReset={resetInventory} // 상태 초기화 핸들러 전달
+          />
+        )}
       </div>
       <InventoryButton onClick={openInventory} />
       {isInventoryOpen && <InventoryModal items={inventory} onClose={closeInventory} />}
