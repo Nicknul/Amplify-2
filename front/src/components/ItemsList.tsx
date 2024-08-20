@@ -7,29 +7,31 @@ import sunglasses1 from '../public/sunglasses-1.png';
 import sunglasses2 from '../public/sunglasses-2.png';
 
 type ItemsListProps = {
-  visibleItems: string[];
-  onItemClicked: (itemName: string) => void;
+  onItemClick: (item: { src: StaticImageData; name: string }) => void;
+  inventory: { src: StaticImageData; name: string }[];
 };
 
-const ItemsList: React.FC<ItemsListProps> = ({ visibleItems, onItemClicked }) => {
-  // 각 아이템의 이미지 경로를 StaticImageData 타입으로 정의
-  const itemsMap: Record<string, StaticImageData> = {
-    chick,
-    nest,
-    ribbon,
-    'sunglasses-1': sunglasses1,
-    'sunglasses-2': sunglasses2,
-  };
+const ItemsList: React.FC<ItemsListProps> = ({ onItemClick, inventory }) => {
+  const items = [
+    { src: chick, name: '병아리' },
+    { src: nest, name: '둥지' },
+    { src: ribbon, name: '리본' },
+    { src: sunglasses1, name: '외계인 선글라스' },
+    { src: sunglasses2, name: '기본 선글라스' },
+  ];
+
+  // 인벤토리에 추가된 아이템은 필터링해서 제외
+  const filteredItems = items.filter((item) => !inventory.some((invItem) => invItem.name === item.name));
 
   return (
     <div className="flex space-x-4 mt-4 animate-bounce">
-      {visibleItems.map((itemName) => (
+      {filteredItems.map((item, index) => (
         <Image
-          key={itemName}
-          src={itemsMap[itemName]}
-          alt="아이템"
+          key={index}
+          src={item.src}
+          alt={item.name}
           className="w-16 h-16 cursor-pointer"
-          onClick={() => onItemClicked(itemName)}
+          onClick={() => onItemClick(item)}
         />
       ))}
     </div>
