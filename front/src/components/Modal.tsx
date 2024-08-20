@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ message, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      {showConfetti && <Confetti />} {/* 처음 모달이 나타날 때만 폭죽 표시 */}
+      {/* {showConfetti && <Confetti />} 처음 모달이 나타날 때만 폭죽 표시 */}
       <div
         className="w-72 h-64 backdrop-blur-xl bg-white/30 p-5 rounded-xl shadow-lg text-center relative flex flex-col items-center justify-evenly"
         style={{ zIndex: 10 }}
