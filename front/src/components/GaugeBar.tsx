@@ -1,6 +1,8 @@
 import React from 'react';
 import { useGauge } from '../hooks/useGauge';
 import Modal from './Modal';
+import Image from 'next/image';
+import kongImage from '../public/kong.png'; // 이미지 파일을 import
 
 type GaugeBarProps = {
   initialValue: number;
@@ -21,9 +23,14 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
           style={{ width: `${gauge}%` }}
         ></div>
       </div>
-      <button onClick={decreaseGauge} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Decrease Gauge
-      </button>
+      <div className="mt-2 flex justify-center">
+        <Image
+          src={kongImage}
+          alt="Kong"
+          onClick={decreaseGauge}
+          className="cursor-pointer transform hover:animate-shake" // 크기와 떨림 애니메이션 추가
+        />
+      </div>
 
       {isSuccess && <Modal message="The gauge is fully depleted." onClose={handleCloseModal} />}
     </div>
