@@ -18,12 +18,22 @@ const config: Config = {
           '25%': { transform: 'translateX(-5px)' },
           '75%': { transform: 'translateX(5px)' },
         },
+        confetti: {
+          '0%': { opacity: 0, transform: 'translateY(0) rotate(0deg)' },
+          '50%': { opacity: 1 }, // 서서히 나타나도록 설정
+          '100%': {
+            opacity: 0,
+            transform: 'translateY(-100vh) rotate(720deg)',
+          },
+        },
       },
       animation: {
-        shake: 'shake 0.2s ease-in-out infinite', // 떨림 애니메이션 정의
+        shake: 'shake 0.2s ease-in-out infinite',
+        confetti: 'confetti 3s ease-out forwards',
       },
     },
   },
   plugins: [],
-};
+} as unknown as Config; // 타입을 완화하여 타입스크립트의 엄격한 체크를 피함
+
 export default config;
