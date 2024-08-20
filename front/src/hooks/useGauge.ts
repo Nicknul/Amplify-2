@@ -14,7 +14,7 @@ export const useGauge = (initialValue: number) => {
       if (!isDecreasing && gauge < 100) {
         setGauge((prev) => Math.min(prev + 1, 100));
       }
-    }, 100);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [isDecreasing, gauge]);
@@ -23,7 +23,7 @@ export const useGauge = (initialValue: number) => {
     if (isDecreasing) {
       const timer = setTimeout(() => {
         setIsDecreasing(false);
-      }, 1000);
+      }, 50);
 
       return () => clearTimeout(timer);
     }
