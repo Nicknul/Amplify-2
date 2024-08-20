@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGauge } from '../hooks/useGauge';
 import { useInventory } from '../hooks/useInventory';
+import { useGaugeBarEffects } from '../hooks/useGaugeBarEffects';
+import { useInventoryToggle } from '../hooks/useInventoryToggle';
 import Kong from './Kong';
 import Gauge from './Gauge';
 import ItemsList from './ItemsList';
@@ -15,15 +17,9 @@ type GaugeBarProps = {
 const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
   const { gauge, handleClick, isShaking } = useGauge(initialValue);
   const { inventory, showItems, setShowItems, addItemToInventory } = useInventory();
-  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
+  const { isInventoryOpen, openInventory, closeInventory } = useInventoryToggle();
 
-  useEffect(() => {
-    if (gauge === 0) {
-      setTimeout(() => {
-        setShowItems(true);
-      }, 300);
-    }
-  }, [gauge, setShowItems]);
+  useGaugeBarEffects(gauge, setShowItems);
 
   return (
     <div className="relative flex justify-center min-h-screen">
@@ -37,8 +33,8 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
         )}
         {showItems && <ItemsList onItemClick={addItemToInventory} inventory={inventory} />}
       </div>
-      <InventoryButton onClick={() => setIsInventoryOpen(true)} />
-      {isInventoryOpen && <InventoryModal items={inventory} onClose={() => setIsInventoryOpen(false)} />}
+      <InventoryButton onClick={openInventory} />
+      {isInventoryOpen && <InventoryModal items={inventory} onClose={closeInventory} />}
     </div>
   );
 };
