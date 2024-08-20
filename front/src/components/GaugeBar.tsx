@@ -28,9 +28,13 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ initialValue }) => {
   return (
     <div className="relative flex justify-center min-h-screen">
       <div className="flex flex-col items-center justify-center">
-        <LevelDisplay />
-        <Gauge gauge={gauge} />
-        {!showItems && inventory.length < 5 && <Kong onClick={handleClick} isShaking={isShaking} />}
+        {!showItems && (
+          <>
+            <LevelDisplay />
+            <Gauge gauge={gauge} />
+            <Kong onClick={handleClick} isShaking={isShaking} />
+          </>
+        )}
         {showItems && <ItemsList onItemClick={addItemToInventory} inventory={inventory} />}
       </div>
       <InventoryButton onClick={() => setIsInventoryOpen(true)} />
